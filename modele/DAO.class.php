@@ -478,6 +478,14 @@ class DAO
     
 
     
+    public function existeAdrMailUtilisateur($adrMail ){
+       $txt_req = "Select adrMail FROM tracegps_utilisateurs WHERE adrMail = :adrMail";
+       $req = $this->cnx->prepare($txt_req);
+       $req->bindValue("adrMail", $adrMail, PDO::PARAM_STR);
+       $ok = $req->execute();
+       if($ok['adrMail']==$adrMail)return true;
+       else return false;
+    }
     
     
     
@@ -535,129 +543,7 @@ class DAO
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
     
