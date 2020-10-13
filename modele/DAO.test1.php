@@ -78,15 +78,24 @@ $dao = new DAO();
 // if ($dao->creerUneAutorisation(2, 1)) $ok = "oui"; else $ok = "non";
 // echo "<p>La création de l'autorisation de l'utilisateur 2 vers l'utilisateur 1 a réussi : <b>" . $ok . "</b><br>";
 
-// test de la méthode supprimerUneAutorisation ----------------------------------------------------
-// modifié par Jim le 13/8/2018
-echo "<h3>Test de supprimerUneAutorisation : </h3>";
-// on crée une autorisation
-if ($dao->creerUneAutorisation(2, 1)) $ok = "oui"; else $ok = "non";
-echo "<p>La création de l'autorisation de l'utilisateur 2 vers l'utilisateur 1 a réussi : <b>" . $ok . "</b><br>";
-// puis on la supprime
-if ($dao->supprimerUneAutorisation(2, 1)) $ok = "oui"; else $ok = "non";
-echo "<p>La suppression de l'autorisation de l'utilisateur 2 vers l'utilisateur 1 a réussi : <b>" . $ok . "</b><br>";
+// // test de la méthode supprimerUneAutorisation ----------------------------------------------------
+// // modifié par Jim le 13/8/2018
+// echo "<h3>Test de supprimerUneAutorisation : </h3>";
+// // on crée une autorisation
+// if ($dao->creerUneAutorisation(2, 1)) $ok = "oui"; else $ok = "non";
+// echo "<p>La création de l'autorisation de l'utilisateur 2 vers l'utilisateur 1 a réussi : <b>" . $ok . "</b><br>";
+// // puis on la supprime
+// if ($dao->supprimerUneAutorisation(2, 1)) $ok = "oui"; else $ok = "non";
+// echo "<p>La suppression de l'autorisation de l'utilisateur 2 vers l'utilisateur 1 a réussi : <b>" . $ok . "</b><br>";
+
+// test de la méthode existeAdrMailUtilisateur ----------------------------------------------------
+// modifié par Jim le 12/8/2018
+echo "<h3>Test de existeAdrMailUtilisateur : </h3>";
+if ($dao->existeAdrMailUtilisateur("admin@gmail.com")) $existe = "oui"; else $existe = "non";
+echo "<p>Existence de l'utilisateur 'admin@gmail.com' : <b>" . $existe . "</b><br>";
+if ($dao->existeAdrMailUtilisateur("delasalle.sio.eleves@gmail.com")) $existe = "oui"; else $existe = "non";
+echo "Existence de l'utilisateur 'delasalle.sio.eleves@gmail.com' : <b>" . $existe . "</b></br>";
+
 
 
 
