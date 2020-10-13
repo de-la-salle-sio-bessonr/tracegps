@@ -102,7 +102,7 @@ class PointDeTrace extends Point
         $secondes=0;
         $reste=0;
         $temps=0;
-        $temps = $this->_tempsCumule;
+        $temps = $this->tempsCumule;
         
         $heures = $temps / 3600;
         $reste = $temps % 3600;
