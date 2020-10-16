@@ -41,6 +41,8 @@ class PointDeTrace extends Point
             // appelle le constructeur de la classe mère avec 3 paramètres
             parent::__construct($uneLatitude, $uneLongitude, $uneAltitude);
             // initialise les nouveaux attributs
+            $this->idTrace = $unIdTrace;
+            $this->id = $unID;
             $this->dateHeure = $uneDateHeure;
             $this->rythmeCardio = $unRythmeCardio;
             $this->tempsCumule = $unTempsCumule;
