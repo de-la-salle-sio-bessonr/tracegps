@@ -88,15 +88,15 @@ $dao = new DAO();
 // if ($dao->supprimerUneAutorisation(2, 1)) $ok = "oui"; else $ok = "non";
 // echo "<p>La suppression de l'autorisation de l'utilisateur 2 vers l'utilisateur 1 a réussi : <b>" . $ok . "</b><br>";
 
-// test de la méthode existeAdrMailUtilisateur ----------------------------------------------------
-// modifié par Jim le 12/8/2018
-echo "<h3>Test de existeAdrMailUtilisateur : </h3>";
-if ($dao->existeAdrMailUtilisateur("admin@gmail.com")) $existe = "oui"; else $existe = "non";
-echo "<p>Existence de l'utilisateur 'admin@gmail.com' : <b>" . $existe . "</b><br>";
-if ($dao->existeAdrMailUtilisateur("delasalle.sio.besson.r@gmail.com")) $existe = "oui"; else $existe = "non";
-echo "Existence de l'utilisateur 'delasalle.sio.besson.r@gmail.com' : <b>" . $existe . "</b></br>";
-// ferme la connexion à MySQL :
-unset($dao);
+// // test de la méthode existeAdrMailUtilisateur ----------------------------------------------------
+// // modifié par Jim le 12/8/2018
+// echo "<h3>Test de existeAdrMailUtilisateur : </h3>";
+// if ($dao->existeAdrMailUtilisateur("admin@gmail.com")) $existe = "oui"; else $existe = "non";
+// echo "<p>Existence de l'utilisateur 'admin@gmail.com' : <b>" . $existe . "</b><br>";
+// if ($dao->existeAdrMailUtilisateur("delasalle.sio.besson.r@gmail.com")) $existe = "oui"; else $existe = "non";
+// echo "Existence de l'utilisateur 'delasalle.sio.besson.r@gmail.com' : <b>" . $existe . "</b></br>";
+// // ferme la connexion à MySQL :
+// unset($dao);
 
 // // test de la méthode creerUneTrace ----------------------------------------------------------
 // // modifié par Jim le 14/8/2018
@@ -131,6 +131,26 @@ unset($dao);
 // else {
 //     echo "<p>Echec lors de la suppression de la trace !</p>";
 // }
+
+
+
+// test des méthodes creerUnPointDeTrace et terminerUneTrace --------------------------------------
+// modifié par Jim le 15/8/2018
+echo "<h3>Test de terminerUneTrace : </h3>";
+// on choisit une trace non terminée
+$unIdTrace = 3;
+// on l'affiche
+$laTrace = $dao->getUneTrace($unIdTrace);
+echo "<h4>l'objet laTrace avant l'appel de la méthode terminerUneTrace : </h4>";
+echo ($laTrace->toString());
+echo ('<br>');
+// on la termine
+$dao->terminerUneTrace($unIdTrace);
+// et on l'affiche à nouveau
+$laTrace = $dao->getUneTrace($unIdTrace);
+echo "<h4>l'objet laTrace après l'appel de la méthode terminerUneTrace : </h4>";
+echo ($laTrace->toString());
+echo ('<br>');
 
 
 

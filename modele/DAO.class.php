@@ -483,7 +483,7 @@ class DAO
     
     public function existeAdrMailUtilisateur($adrMail ){
         
-       $txt_req = "Select adrMail FROM tracegps_utilisateurs WHERE adrMail LIKE ':adrMail'";
+       $txt_req = "Select count(*) FROM tracegps_utilisateurs WHERE adrMail = :adrMail";
        $req = $this->cnx->prepare($txt_req);
        $req->bindValue("adrMail", $adrMail, PDO::PARAM_STR);
        $req->execute();
@@ -497,7 +497,7 @@ class DAO
        }
     }
     
-    // existeAdrMailUtilisateur a faire
+
     
     public function creerUneTrace($uneTrace ) {
         // on teste si l'utilisateur existe déjà
