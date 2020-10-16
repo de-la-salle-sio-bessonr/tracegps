@@ -535,9 +535,37 @@ class DAO
     
     
     
+    public function terminerUneTrace($idTrace){
+        //2018-01-19 13:11:48
+        $Trace = 1;
+        if(1==1) { $dateFin = date('Y-m-d H:i:s'); }
+        else {
+            
+        }
+        
+        
+        
+        $txt_req = "update tracegps_traces set datefin = ':datefin', terminee=1";
+        $txt_req .= " where id = :id";
+        $req = $this->cnx->prepare($txt_req);
+        $req->bindValue("id", $idTrace, PDO::PARAM_STR);
+        $req->bindValue("datefin", $dateFin, PDO::PARAM_STR);
+        $ok = $req->execute();
+        return $ok;
+    }
     
-    
-    
+    public function modifierMdpUtilisateur($pseudo, $nouveauMdp) {
+        // préparation de la requête
+        $txt_req = "update tracegps_utilisateurs set mdpSha1 = :nouveauMdp";
+        $txt_req .= " where pseudo = :pseudo";
+        $req = $this->cnx->prepare($txt_req);
+        // liaison de la requête et de ses paramètres
+        $req->bindValue("nouveauMdp", sha1($nouveauMdp), PDO::PARAM_STR);
+        $req->bindValue("pseudo", $pseudo, PDO::PARAM_STR);
+        // exécution de la requête
+        $ok = $req->execute();
+        return $ok;
+    }
     
     
     
