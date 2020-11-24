@@ -1,13 +1,12 @@
 <?php
-
 // Projet TraceGPS - services web
 // fichier : api/services/GetTousLesUtilisateurs.php
-// Dernière mise à jour : 17/7/2019 par EVENO
+// Dernière mise à jour : 3/7/2019 par Jim
 
-// Rôle : ce service web permet à un utilisateur d'obtenir la liste de ses parcours ou la liste des parcours d'un utilisateur qui l'autorise.
+// Rôle : ce service permet à un utilisateur authentifié d'obtenir la liste de tous les utilisateurs (de niveau 1)
+// Le service web doit recevoir 3 paramètres :
 //     pseudo : le pseudo de l'utilisateur
 //     mdp : le mot de passe de l'utilisateur hashé en sha1
-//pseudoConsulte : le pseudo de l'utilisateur dont on veut consulter la liste des parcours
 //     lang : le langage du flux de données retourné ("xml" ou "json") ; "xml" par défaut si le paramètre est absent ou incorrect
 // Le service retourne un flux de données XML ou JSON contenant un compte-rendu d'exécution
 
@@ -20,7 +19,7 @@ $dao = new DAO();
 // Récupération des données transmises
 $pseudo = ( empty($this->request['pseudo'])) ? "" : $this->request['pseudo'];
 $mdpSha1 = ( empty($this->request['mdp'])) ? "" : $this->request['mdp'];
-$pseudoConsulte =(empty($this->request['pseudoConsulte'])) ?"" : $this->request['pseudoConsulte'];
+$pseudoConsulte =(empty($this->request['pseudo'])) ?"" : $this->request['pseudo'];
 $lang = ( empty($this->request['lang'])) ? "" : $this->request['lang'];
 
 // "xml" par défaut si le paramètre lang est absent ou incorrect
@@ -28,8 +27,7 @@ if ($lang != "json") $lang = "xml";
 
 // initialisation du nombre de réponses
 $nbReponses = 0;
-$lesUtilisateurs = array();
-
+$lesTracesUtilisateurs = array();
 // La méthode HTTP utilisée doit être GET
 if ($this->getMethodeRequete() != "GET")
 {	$msg = "Erreur : méthode HTTP incorrecte.";
@@ -47,11 +45,27 @@ else {
         $code_reponse = 401;
     }
     else
+    {	// contrôle d'existence de pseudoAsupprimer
+        $unUtilisateur = $dao->getUnUtilisateur($pseudoConsulte);
+        if ($unUtilisateur == null)
+        {  $msg = "Erreur : pseudo utilisateur inexistant.";
+        $code_reponse = 400;
+        }
+    else 
+    
+    { if($dao->autoriseAConsulter($pseudoConsulte, $pseudo) == false|| $pseudo != $pseudoConsulte)
+    {  $msg = "Erreur : vous n'êtes pas autorisé par cet utilisateur.";
+        $code_reponse = 400;       
+    }
+    
+    else
     {	// récupération de la liste des utilisateurs à l'aide de la méthode getTousLesUtilisateurs de la classe DAO
-        $lesUtilisateurs = $dao->getTousLesUtilisateurs();
+        $unUtilisateur = $dao->getUnUtilisateur($pseudo);
+        $lesTracesUtilisateurs = $dao->getToutesLesTraces($unUtilisateur->getId());
+        
         
         // mémorisation du nombre d'utilisateurs
-        $nbReponses = sizeof($lesUtilisateurs);
+        $nbReponses = sizeof($lesTracesUtilisateurs);
         
         if ($nbReponses == 0) {
             $msg = "Aucun utilisateur.";
@@ -63,7 +77,9 @@ else {
         }
     }
     }
+  }
 }
+
 // ferme la connexion à MySQL :
 unset($dao);
 
@@ -84,7 +100,7 @@ $this->envoyerReponse($code_reponse, $content_type, $donnees);
 exit;
 
 // ================================================================================================
-
+}
 // création du flux XML en sortie
 function creerFluxXML($msg, $lesUtilisateurs)
 {
