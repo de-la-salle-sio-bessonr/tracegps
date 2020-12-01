@@ -559,10 +559,6 @@ class DAO
             $dateFin = $DernierPoint->getDateHeure();
         }
 
-        
-        $dateFin = $uneTrace->getDateheureFin();
-        
-
         $txt_req = "update tracegps_traces set datefin = :datefin, terminee = 1";
         $txt_req .= " where id = :id";
         $req = $this->cnx->prepare($txt_req);
