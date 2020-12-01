@@ -500,7 +500,7 @@ class DAO
     
 
     
-    public function creerUneTrace($uneTrace ) {
+    public function creerUneTrace(Trace $uneTrace ) {
         // on teste si l'utilisateur existe déjà
         
         // préparation de la requête
@@ -509,7 +509,16 @@ class DAO
         $req1 = $this->cnx->prepare($txt_req1);
         // liaison de la requête et de ses paramètres
         $req1->bindValue("dateDebut", utf8_decode($uneTrace->getDateHeureDebut()), PDO::PARAM_STR);
-        $req1->bindValue("dateFin", utf8_decode($uneTrace->getDateHeureFin()), PDO::PARAM_STR);
+        
+        if ($uneTrace->getDateHeureFin() != NULL)
+        {
+            $req1->bindValue("dateFin", utf8_decode($uneTrace->getDateHeureFin()), PDO::PARAM_STR);
+        }
+        else 
+        {
+            $req1->bindValue("dateFin", NULL, PDO::PARAM_NULL);
+        }
+        
         $req1->bindValue("terminee", utf8_decode($uneTrace->getTerminee()), PDO::PARAM_INT);
         $req1->bindValue("idUtilisateur", utf8_decode($uneTrace->getIdUtilisateur()), PDO::PARAM_INT);
         // exécution de la requête
