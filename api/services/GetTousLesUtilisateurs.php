@@ -26,7 +26,7 @@ if ($lang != "json") $lang = "xml";
 
 // initialisation du nombre de réponses
 $nbReponses = 0;
-$lesUtilisateurs = array();
+$lesUtilisateursAutorisant = array();
 
 // La méthode HTTP utilisée doit être GET
 if ($this->getMethodeRequete() != "GET")
@@ -46,10 +46,10 @@ else {
         }
     	else 
     	{	// récupération de la liste des utilisateurs à l'aide de la méthode getTousLesUtilisateurs de la classe DAO
-    	    $lesUtilisateurs = $dao->getTousLesUtilisateurs();
+    	    $lesUtilisateursAutorisant = $dao->getTousLesUtilisateurs();
     	    
     	    // mémorisation du nombre d'utilisateurs
-    	    $nbReponses = sizeof($lesUtilisateurs);
+    	    $nbReponses = sizeof($lesUtilisateursAutorisant);
     	
     	    if ($nbReponses == 0) {
     			$msg = "Aucun utilisateur.";
@@ -68,11 +68,11 @@ unset($dao);
 // création du flux en sortie
 if ($lang == "xml") {
     $content_type = "application/xml; charset=utf-8";      // indique le format XML pour la réponse
-    $donnees = creerFluxXML($msg, $lesUtilisateurs);
+    $donnees = creerFluxXML($msg, $lesUtilisateursAutorisant);
 }
 else {
     $content_type = "application/json; charset=utf-8";      // indique le format Json pour la réponse
-    $donnees = creerFluxJSON($msg, $lesUtilisateurs);
+    $donnees = creerFluxJSON($msg, $lesUtilisateursAutorisant);
 }
 
 // envoi de la réponse HTTP
