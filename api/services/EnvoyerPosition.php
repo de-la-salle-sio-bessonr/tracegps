@@ -26,7 +26,7 @@ else {
     // Les paramètres doivent être présents
     if ( $pseudo == "" || $mdpSha1 == "" || $idTrace == "" || $dateHeure == "" || $latitude == "" || $longitude == "" || $altitude == "" || $rythmeCardio == "" )
     { $msg = "Erreur : données incomplètes.";
-    $code_reponse = 400;
+      $code_reponse = 400;
     }
     else
     { 
