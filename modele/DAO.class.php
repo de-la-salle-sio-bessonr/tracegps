@@ -691,7 +691,7 @@ class DAO
         $txt_req .= " where id = :id";
         $req = $this->cnx->prepare($txt_req);
         // liaison de la requête et de ses paramètres
-        $req->bindValue("id", $idTrace, PDO::PARAM_STR);
+        $req->bindValue("id", $idTrace, PDO::PARAM_INT);
         // extraction des données
         $req->execute();
         $uneLigne = $req->fetch(PDO::FETCH_OBJ);

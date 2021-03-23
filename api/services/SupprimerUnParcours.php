@@ -55,7 +55,7 @@ else {
             {   // Vérifier si l'utilisateur est bien le propriétaire de la trace à supprimer
                 $unUtilisateur = $dao->getUnUtilisateur($pseudo);
                 if ( $unUtilisateur->getId() != $uneTrace->getIdUtilisateur()) {
-                    $msg = "Erreur : vous n'êtes pas le propriétaire de ce parcours.";
+                    $msg = " Erreur : vous n'êtes pas le propriétaire de ce parcours.";
                     $code_reponse = 400;
                 }
                 else {

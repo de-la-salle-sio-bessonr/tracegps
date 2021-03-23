@@ -77,7 +77,7 @@ else {
                              $code_reponse = 200;
                          }
                          else {
-                             $msg = $nbReponses . " utilisateur(s).";
+                             $msg = $nbReponses . " trace(s) pour l'utilisateur " . $pseudoConsulte ;
                              $code_reponse = 200;
                          }
                      }
@@ -207,7 +207,7 @@ function creerFluxXML($msg, $lesTracesUtilisateur)
             $elt_dateHeureFin    = $doc->createElement('dateHeureFin', $uneTrace->getDateHeureFin());
             $elt_trace->appendChild($elt_dateHeureFin );
            
-            $elt_distance    = $doc->createElement('ditance', $uneTrace->getDistanceTotale());
+            $elt_distance    = $doc->createElement('distance', $uneTrace->getDistanceTotale());
             $elt_trace->appendChild($elt_distance );
            
             $elt_idUtilisateur = $doc->createElement('idUtilisateur', $uneTrace->getIdUtilisateur());
@@ -278,7 +278,7 @@ function creerFluxJSON($msg, $lesTracesUtilisateur)
             $unObjetTrace["dateHeureDebut"] = $uneTrace->getDateHeureDebut();
             $unObjetTrace["terminee"] = $uneTrace->getTerminee();
             $unObjetTrace["dateHeureFin"] = $uneTrace->getDateHeureFin();
-            $unObjetTrace["ditance"] = $uneTrace->getDistanceTotale();
+            $unObjetTrace["distance"] = $uneTrace->getDistanceTotale();
             $unObjetTrace["id utilisateur"] = $uneTrace->getIdUtilisateur();
             //$unObjetTrace["nbTraces"] = $uneTrace->getNbTraces();
             //if ($uneTrace->getNbTraces() > 0)

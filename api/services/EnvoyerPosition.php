@@ -19,14 +19,14 @@ $id = 0;
 
 // La méthode HTTP utilisée doit être GET
 if ($this->getMethodeRequete() != "GET")
-{ $msg = "Erreur : méthode HTTP incorrecte.";
-$code_reponse = 406;
+{   $msg = "Erreur : méthode HTTP incorrecte.";
+    $code_reponse = 406;
 }
 else {
     // Les paramètres doivent être présents
     if ( $pseudo == "" || $mdpSha1 == "" || $idTrace == "" || $dateHeure == "" || $latitude == "" || $longitude == "" || $altitude == "" || $rythmeCardio == "" )
-    { $msg = "Erreur : données incomplètes.";
-    $code_reponse = 400;
+    {   $msg = "Erreur : données incomplètes.";
+        $code_reponse = 400;
     }
     else
     { 
@@ -41,34 +41,40 @@ else {
             $uneTrace = $dao->getUneTrace($idTrace);
             if ($uneTrace == null) 
             {  
-                $msg = "Le numéro de trace n'existe pas.";
-                $code_reponse = 401;
-            }
-            elseif ( $uneTrace->getIdUtilisateur() != $idutilisateur )
-            {
-                $msg = "Le numéro de trace ne correspond pas à cet utilisateur.";
-                $code_reponse = 401;
-            }
-            elseif ($uneTrace->getTerminee() == true)
-            {
-                $msg = "La trace est déjà terminée";
+                $msg = "Erreur : le numéro de trace n'existe pas.";
                 $code_reponse = 401;
             }
             else
             {
-                $id = $uneTrace->getNombrePoints() + 1 ;
-                $unPointDeTrace = new PointDeTrace($idTrace, $id, $latitude, $longitude, $altitude, $dateHeure, $rythmeCardio, 0, 0, 0);
-            
-                $ok = $dao->creerUnPointDeTrace($unPointDeTrace);
-                if($ok == true)
+                if ( $uneTrace->getIdUtilisateur() != $idutilisateur )
                 {
-                    $msg = "Point créé.";
-                    $code_reponse = 200;
+                    $msg = "Le numéro de trace ne correspond pas à cet utilisateur.";
+                    $code_reponse = 401;
                 }
                 else
                 {
-                    $msg = "Erreur : problème lors de l'enregistrement du point";
-                    $code_reponse = 401;
+                    if ($uneTrace->getTerminee() == true)
+                    {
+                        $msg = "La trace est déjà terminée";
+                        $code_reponse = 401;
+                    }
+                    else
+                    {
+                        $id = $uneTrace->getNombrePoints() + 1 ;
+                        $unPointDeTrace = new PointDeTrace($idTrace, $id, $latitude, $longitude, $altitude, $dateHeure, $rythmeCardio, 0, 0, 0);
+                    
+                        $ok = $dao->creerUnPointDeTrace($unPointDeTrace);
+                        if ($ok == true)
+                        {
+                            $msg = "Point créé.";
+                            $code_reponse = 200;
+                        }
+                        else
+                        {
+                            $msg = "Erreur : problème lors de l'enregistrement du point";
+                            $code_reponse = 401;
+                        }
+                    }
                 }
             }
         }
