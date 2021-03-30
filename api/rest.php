@@ -114,9 +114,9 @@ class Rest {
 				$lesEntrees[$cle] = $this->remettreEnFormeLesEntrees($valeur);
 			}
 		} else {
-			if (get_magic_quotes_gpc()) {
-				$data = trim(stripslashes($data));
-			}
+// 			if (get_magic_quotes_gpc()) {
+// 				$data = trim(stripslashes($data));
+// 			}
 			$data = strip_tags($data);
 			$lesEntrees = trim($data);
 		}

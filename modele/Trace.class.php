@@ -248,7 +248,12 @@ class Trace
             $dist = $unPoint->getDistance($unPoint, $leDernierPoint);
             $distTotale = $dist + $leDernierPoint->getDistanceCumulee();
             
-            $temps = strtotime($unPoint->getDateHeure()) - strtotime($leDernierPoint->getDateHeure());
+            if (strtotime($unPoint->getDateHeure()) > strtotime($leDernierPoint->getDateHeure()))
+            {
+                $temps = strtotime($unPoint->getDateHeure()) - strtotime($leDernierPoint->getDateHeure());
+            }
+            else $temps=1;
+            // a voir
             $tempsCumule = $temps + $leDernierPoint->getTempsCumule();
             
             $vitesse = $dist/($temps/3600);
